@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Weather</string>
+    <string name="hint_enter_city_name">Введите название города:</string>
+    <string name="default_city">Novosibirsk</string>
+    <string name="error_hint">Введите название города</string>
+    <string name="button_check_weather">Узнать погоду</string>
+    <string name="weather_description">%sТемпература воздуха: %s \u2103\nНа улице: %sСкорость ветра: %s м/с</string>
+    <string name="error_connection">Отсутсвует подключение к интернету</string>
+    <string name="error_unknown_city">Город не найден</string>
+    <string name="search">Search</string>
+    <string name="tv_temp_c">C</string>
+    <string name="tv_humidity_label">%</string>
+    <string name="tv_pressure_label">мм рт.ст.</string>
+    <string name="tv_wind_label">м/с</string>
+    <string name="tv_time_update_label">Время последнего обновления:</string>
+</resources>

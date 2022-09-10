@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipe_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/sky"
+    tools:context=".presentation.MainActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/iv_pressure"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_temp" />
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/search_view"
+            style="@style/Widget.AppCompat.SearchView.ActionBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:queryHint="@string/hint_enter_city_name" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.3" />
+
+
+        <TextView
+            android:id="@+id/tv_city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toTopOf="@id/guideline"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/search_view"
+            tools:text="Новосибирск" />
+
+        <TextView
+            android:id="@+id/tv_temp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:letterSpacing="-0.05"
+            android:text="24"
+            android:textColor="@color/white"
+            android:textSize="120sp"
+            app:layout_constraintEnd_toStartOf="@id/iv_temp_o"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/guideline"
+            tools:text="30" />
+
+        <ImageView
+            android:id="@+id/iv_temp_o"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_icon_o"
+            app:layout_constraintBottom_toTopOf="@id/tv_temp_c"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_temp"
+            app:layout_constraintTop_toTopOf="@id/tv_temp"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/tv_temp_c"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_temp_c"
+            android:textColor="@color/white"
+            android:textSize="40sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_temp"
+            app:layout_constraintEnd_toEndOf="@+id/iv_temp_o"
+            app:layout_constraintStart_toStartOf="@id/iv_temp_o"
+            app:layout_constraintTop_toBottomOf="@id/iv_temp_o" />
+
+        <ImageView
+            android:id="@+id/iv_humidity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_icon_humidity"
+            app:layout_constraintEnd_toStartOf="@+id/iv_pressure"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/iv_pressure" />
+
+        <ImageView
+            android:id="@+id/iv_pressure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:src="@drawable/ic_icon_pressure"
+            app:layout_constraintEnd_toStartOf="@+id/iv_wind"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/iv_humidity"
+            app:layout_constraintTop_toBottomOf="@id/tv_temp" />
+
+        <ImageView
+            android:id="@+id/iv_wind"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_icon_wind"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/iv_pressure"
+            app:layout_constraintTop_toTopOf="@id/iv_pressure" />
+
+        <TextView
+            android:id="@+id/tv_humidity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="50"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toStartOf="@id/tv_humidity_label"
+            app:layout_constraintStart_toStartOf="@id/iv_humidity"
+            app:layout_constraintTop_toBottomOf="@id/iv_humidity"
+            tools:text="100" />
+
+        <TextView
+            android:id="@+id/tv_humidity_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="@string/tv_humidity_label"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_humidity"
+            app:layout_constraintEnd_toEndOf="@id/iv_humidity"
+            app:layout_constraintStart_toEndOf="@id/tv_humidity"
+            app:layout_constraintTop_toTopOf="@id/tv_humidity" />
+
+        <TextView
+            android:id="@+id/tv_pressure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="8dp"
+            android:text="760"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toStartOf="@id/tv_pressure_label"
+            app:layout_constraintStart_toStartOf="@id/iv_pressure"
+            app:layout_constraintTop_toBottomOf="@id/iv_pressure"
+            tools:text="760" />
+
+        <TextView
+            android:id="@+id/tv_pressure_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:lineSpacingExtra="-3dp"
+            android:lines="2"
+            android:maxEms="3"
+            android:text="@string/tv_pressure_label"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_pressure"
+            app:layout_constraintEnd_toEndOf="@id/iv_pressure"
+            app:layout_constraintStart_toEndOf="@id/tv_pressure"
+            app:layout_constraintTop_toTopOf="@id/tv_pressure" />
+
+        <TextView
+            android:id="@+id/tv_wind"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="4"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toStartOf="@id/tv_wind_label"
+            app:layout_constraintStart_toStartOf="@id/iv_wind"
+            app:layout_constraintTop_toBottomOf="@id/iv_wind"
+            tools:text="10" />
+
+        <TextView
+            android:id="@+id/tv_wind_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="@string/tv_wind_label"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_wind"
+            app:layout_constraintEnd_toEndOf="@id/iv_wind"
+            app:layout_constraintStart_toEndOf="@id/tv_wind"
+            app:layout_constraintTop_toTopOf="@id/tv_wind" />
+
+        <TextView
+            android:id="@+id/tv_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="72dp"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_pressure_label"
+            tools:text="ясно" />
+
+        <TextView
+            android:id="@+id/tv_time_update_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="48dp"
+            android:text="@string/tv_time_update_label"
+            android:textColor="#80FFFFFF"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tv_time_update"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_time_update"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="48dp"
+            android:textColor="#80FFFFFF"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_time_update_label" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
