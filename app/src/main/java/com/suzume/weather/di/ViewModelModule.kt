@@ -18,12 +18,4 @@ interface ViewModelModule {
     @Binds
     fun bindMainViewModel(impl: MainViewModel): ViewModel
 
-    companion object {
-
-        @Provides
-        fun provideWeatherDao(application: Application): WeatherDao {
-            return AppDatabase.getInstance(application).weatherDao()
-        }
-    }
-
 }
