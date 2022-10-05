@@ -1,7 +1,6 @@
 package com.suzume.weather.presentation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.widget.Toast
@@ -12,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.suzume.weather.App
 import com.suzume.weather.R
 import com.suzume.weather.databinding.ActivityMainBinding
+import com.suzume.weather.domain.entity.Weather
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -33,6 +33,10 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var defaultCity: String
 
+    private val sharedPref by lazy {
+        getSharedPreferences(getString(R.string.shared_pref_name), MODE_PRIVATE)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         component.inject(this)
         super.onCreate(savedInstanceState)
@@ -41,16 +45,46 @@ class MainActivity : AppCompatActivity() {
         window.navigationBarColor = resources.getColor(R.color.transparent, theme)
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
+        defaultCity = sharedPref.getString(DEFAULT_CITY, DEFAULT_CITY_VALUE).toString()
+
+        loadDefaultCity()
         setupSearchView()
         setupSwipe()
         observeViewModel()
+
     }
 
     private fun observeViewModel() {
-        setupView()
-        ifErrorConnection()
-        ifUnknownCity()
-        isLoading()
+        viewModel.observe(this) {
+            binding.progress.visibility = View.GONE
+            when (it) {
+                is Progress -> binding.progress.visibility = View.VISIBLE
+                is Error -> showErrorToast(it)
+                is ResultValue -> {
+                    if (it.weather != null) {
+                        setupContent(it.weather)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun showErrorToast(it: Error) {
+        Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun setupContent(weather: Weather) {
+        sharedPref.edit().putString(DEFAULT_CITY, weather.name).apply()
+        defaultCity = weather.name
+        with(binding) {
+            tvCity.text = weather.name
+            tvTemp.text = weather.temp.toString()
+            tvHumidity.text = weather.humidity.toString()
+            tvPressure.text = weather.pressure.toString()
+            tvWind.text = weather.windSpeed.toString()
+            tvDescription.text = weather.description
+            tvTimeUpdate.text = weather.lastTimeUpdate
+        }
     }
 
     private fun setupSwipe() {
@@ -79,63 +113,8 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun setupView() {
-        viewModel.getWeather().observe(this) {
-            if (it == null) {
-                loadDefaultCity()
-            } else {
-                Log.d("MyTest:MainActivity", it.toString())
-                defaultCity = it.name
-                with(binding) {
-                    tvCity.text = it.name
-                    tvTemp.text = it.temp.toString()
-                    tvHumidity.text = it.humidity.toString()
-                    tvPressure.text = it.pressure.toString()
-                    tvWind.text = it.windSpeed.toString()
-                    tvDescription.text = it.description
-                    tvTimeUpdate.text = it.lastTimeUpdate
-                }
-            }
-        }
-    }
-
     private fun loadDefaultCity() {
-        defaultCity = resources.getString(R.string.default_city)
         viewModel.loadWeather(defaultCity)
-    }
-
-    private fun ifErrorConnection() {
-        viewModel.errorConnection.observe(this) {
-            if (it) {
-                Toast.makeText(
-                    this,
-                    resources.getString(R.string.error_connection),
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        }
-    }
-
-    private fun ifUnknownCity() {
-        viewModel.errorUnknownCity.observe(this) {
-            if (it) {
-                Toast.makeText(
-                    this,
-                    resources.getString(R.string.error_unknown_city),
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        }
-    }
-
-    private fun isLoading() {
-        viewModel.isLoading.observe(this) {
-            if (it) {
-                binding.progress.visibility = View.VISIBLE
-            } else {
-                binding.progress.visibility = View.GONE
-            }
-        }
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
@@ -143,6 +122,11 @@ class MainActivity : AppCompatActivity() {
             binding.searchView.onActionViewCollapsed()
         }
         return super.onTouchEvent(event)
+    }
+
+    companion object {
+        private const val DEFAULT_CITY = "name"
+        private const val DEFAULT_CITY_VALUE = "Moscow"
     }
 
 }

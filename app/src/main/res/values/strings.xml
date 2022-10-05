@@ -13,4 +13,9 @@
     <string name="tv_pressure_label">мм рт.ст.</string>
     <string name="tv_wind_label">м/с</string>
     <string name="tv_time_update_label">Время последнего обновления:</string>
+    <string name="shared_pref_name">cityName</string>
+    <string name="blank_humidity">50</string>
+    <string name="blank_pressure">760</string>
+    <string name="blank_wind">4</string>
+    <string name="blank_temperature">24</string>
 </resources>
